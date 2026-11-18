@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Yagni — Princess Day</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+:root{--pink:#f7b8d0;--rose:#e987ad;--plum:#39223f;--gold:#f6d98c;--cream:#fff5f8}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:Poppins,sans-serif;color:#fff;background:#170f28}
+button{font:inherit;cursor:pointer}
+#scene{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 35%,#68416e 0%,#35213f 45%,#150f27 100%)}
+#scene:before,#scene:after{content:"";position:absolute;border-radius:50%;filter:blur(3px);pointer-events:none}
+#scene:before{width:55vw;height:55vw;min-width:400px;min-height:400px;left:-15%;top:-30%;background:radial-gradient(circle,#f5a8c533,transparent 68%)}
+#scene:after{width:60vw;height:60vw;right:-20%;bottom:-42%;background:radial-gradient(circle,#9b78d633,transparent 68%)}
+.stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(2px 2px at 12% 20%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 75% 13%,#ffe9b5 50%,transparent 60%),radial-gradient(2px 2px at 88% 65%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 25% 78%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 60% 88%,#ffe3f0 50%,transparent 60%);opacity:.7}
+.orb{position:absolute;width:240px;height:240px;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 32% 25%,#fff9 0 3%,#ffd6e9 5%,#d77eae 26%,#754a86 62%,#32203f 78%);box-shadow:inset -18px -20px 35px #120a24aa,inset 12px 10px 22px #fff7,0 0 55px #f5b7dc55;animation:float 5s ease-in-out infinite}
+.orb:before{content:"";position:absolute;inset:18px;border:1px solid #ffe6c899;border-radius:50%;transform:rotateX(68deg) rotateZ(-25deg);box-shadow:0 0 22px #f9dca877}
+.orb:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;filter:blur(5px);left:52px;top:42px;opacity:.8}
+@keyframes float{50%{transform:translate(-50%,-54%) rotateY(12deg)}}
+.petal{position:absolute;top:-10vh;color:#ffc9df;opacity:.65;animation:fall linear infinite;pointer-events:none}
+@keyframes fall{to{transform:translate3d(80px,115vh,0) rotate(520deg);opacity:0}}
+.wrap{position:relative;z-index:2;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+.panel{width:min(760px,94vw);min-height:min(570px,82vh);max-height:88vh;overflow:hidden;position:relative;text-align:center;padding:clamp(26px,5vw,54px);border:1px solid #ffe6ef55;border-radius:30px;background:linear-gradient(145deg,#fff1f51c,#ffffff08);box-shadow:0 24px 90px #08051177,inset 0 1px 0 #fff4;backdrop-filter:blur(18px);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.panel:before{content:"";position:absolute;inset:9px;border:1px solid #f6d98c55;border-radius:23px;pointer-events:none}
+.page{display:none;animation:enter .55s cubic-bezier(.2,.8,.2,1)}
+.page.active{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;gap:15px}
+@keyframes enter{from{opacity:0;transform:translateX(35px) scale(.98)}to{opacity:1;transform:none}}
+.eyebrow{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+h1,h2{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:.98;margin:0;text-shadow:0 4px 22px #170b2c88}
+h1{font-size:clamp(3.4rem,9vw,6.3rem);color:#fff0f6}
+h2{font-size:clamp(2.5rem,6vw,4.2rem);color:#ffe4ef}
+p{font-size:clamp(.9rem,2vw,1.05rem);line-height:1.85;color:#f9eaf2;max-width:560px;margin:0 auto}
+.gold{color:var(--gold)}
+.crown{font-size:clamp(4rem,10vw,6rem);filter:drop-shadow(0 8px 18px #f4cb7855);animation:crown 3s ease-in-out infinite}
+@keyframes crown{50%{transform:translateY(-9px) rotate(3deg)}}
+.bigheart{font-size:3rem;filter:drop-shadow(0 0 16px #ff9fc9);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{transform:scale(1.18)}}
+.actions{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:20px;flex-wrap:wrap}
+.btn{border:1px solid #ffe6ef88;border-radius:999px;padding:12px 25px;color:#fff;background:#ffffff12;backdrop-filter:blur(8px);transition:.25s;letter-spacing:.04em}
+.btn:hover{transform:translateY(-3px);background:#ffffff25;box-shadow:0 8px 24px #09041155}
+.btn.primary{background:linear-gradient(110deg,#e88bb2,#b47bc5);border-color:#ffe9f2aa;color:#fff;box-shadow:0 8px 28px #e78bb255}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.nav{position:absolute;z-index:5;bottom:22px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:18px}
+.progress{position:absolute;top:23px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:5}
+.dot{width:7px;height:7px;border-radius:20px;background:#ffffff40;transition:.3s}
+.dot.on{width:25px;background:var(--gold)}
+.pagecount{position:absolute;top:22px;right:30px;color:#f9dfe9aa;font-size:.72rem;letter-spacing:.12em}
+.letter{padding:22px 25px;border-radius:18px;border:1px solid #f8d9e477;background:#170f2833;max-width:540px;box-shadow:inset 0 0 30px #fff1}
+.letter p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.25rem,3vw,1.65rem);line-height:1.55}
+.giftrow{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.gift{width:105px;height:105px;border:1px solid #ffe6ef88;border-radius:22px;background:linear-gradient(145deg,#f3b4d1,#9d68a9);box-shadow:0 12px 25px #0a061955;display:grid;place-items:center;font-size:2.8rem;transition:.3s}
+.gift:hover{transform:translateY(-8px) rotate(-4deg)}
+.reveal{min-height:32px;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.55rem}
+.photo{width:min(180px,45vw);aspect-ratio:1;border-radius:50%;border:2px solid #f6d98caa;background:radial-gradient(circle at 35% 30%,#fff8,#f5b7d5 24%,#a56aab 62%,#3c254c);display:grid;place-items:center;font-size:4rem;box-shadow:0 0 45px #f6b5d966,inset -15px -18px 30px #32183e66}
+.small{font-size:.78rem;color:#f5dce8aa}
+@media(max-width:520px){.panel{min-height:76vh;padding:28px 20px 78px;border-radius:24px}.panel:before{inset:7px}.nav{bottom:14px}.btn{padding:11px 19px}.pagecount{right:22px;top:17px}.progress{top:20px}}
+</style>
+</head>
+<body>
+<div id="scene">
+  <div class="stars"></div>
+  <div class="orb"></div>
+  <div id="petals"></div>
+  <div class="wrap">
+    <main class="panel" aria-live="polite">
+      <div class="progress" id="progress"></div><div class="pagecount" id="pagecount">01 / 08</div>
+      <section class="page active">
+        <div class="eyebrow">A little royal universe, made for</div>
+        <div class="crown">👑</div>
+        <h1>Yagni</h1>
+        <p>Today, the stars have a special name to celebrate. Welcome to your very own magical kingdom, Princess.</p>
+        <div class="bigheart">♡</div>
+        <div class="small">A little surprise is waiting beyond this page</div>
+      </section>
+      <section class="page">
+        <div class="eyebrow">Chapter 02 · The royal announcement</div>
+        <h2>For the girl who makes<br><span class="gold">ordinary days magical</span></h2>
+        <div class="photo">🌷</div>
+        <p>Some people shine because of the light around them. You shine because of the kindness, warmth and magic you carry within.</p>
+      </section>
+      <section class="page">
+        <div class="eyebrow">Chapter 03 · Your royal qualities</div>
+        <h2>Never forget<br><span class="gold">how special you are</span></h2>
+        <p>✨ Your smile can brighten a cloudy day.</p>
+        <p>🌸 Your heart makes little moments meaningful.</p>
+        <p>🦋 Your presence makes the world feel softer.</p>
+        <p>💗 And your own way of being is your most beautiful crown.</p>
+      </section>
+      <section class="page">
+        <div class="eyebrow">Chapter 04 · A gift from the kingdom</div>
+        <h2>Choose a little<br><span class="gold">surprise, Princess</span></h2>
+        <p>Tap each gift to reveal a tiny reminder made just for you.</p>
+        <div class="giftrow">
+          <button class="gift" onclick="gift(0)" aria-label="Open gift one">🎁</button>
+          <button class="gift" onclick="gift(1)" aria-label="Open gift two">🎀</button>
+          <button class="gift" onclick="gift(2)" aria-label="Open gift three">💝</button>
+        </div>
+        <div class="reveal" id="reveal">Your surprises are waiting…</div>
+      </section>
+      <section class="page">
+        <div class="eyebrow">Chapter 05 · A note from the heart</div>
+        <h2>A little letter<br><span class="gold">for Yagni</span></h2>
+        <div class="letter"><p>Dear Yagni,<br>May you always find reasons to smile, courage to follow your dreams, and people who remind you how precious you are. Never make yourself smaller to fit into someone else's world. Keep shining in your own beautiful way.<br><span class="gold">You deserve all the magic. ♡</span></p></div>
+      </section>
+      <section class="page">
+        <div class="eyebrow">Chapter 06 · Your wish list</div>
+        <h2>May your days be<br><span class="gold">filled with wonder</span></h2>
+        <p>🌙 Dreams that feel bigger than the sky.</p>
+        <p>🌹 Love that feels gentle and safe.</p>
+        <p>✨ Adventures that become favourite memories.</p>
+        <p>☀️ Laughter that stays long after the moment ends.</p>
+      </section>
+      <section class="page">
+        <div class="eyebrow">Chapter 07 · One last thing</div>
+        <div class="crown">💫</div>
+        <h2>The crown looks<br><span class="gold">perfect on you</span></h2>
+        <p>Not because you need a crown to be a princess, but because you deserve to be celebrated exactly as you are.</p>
+        <div class="bigheart">💗</div>
+      </section>
+      <section class="page">
+        <div class="eyebrow">Chapter 08 · The royal finale</div>
+        <div class="crown">👑</div>
+        <h1>Happy<br><span class="gold">Princess Day</span></h1>
+        <p>Yagni, may your life always be as beautiful as the magic you bring into the lives around you.</p>
+        <div class="bigheart">♡</div>
+        <div class="small">Made with love, just for you</div>
+        <div class="actions"><button class="btn primary" onclick="restart()">Replay the magic ↻</button></div>
+      </section>
+    </main>
+  </div>
+  <div class="nav">
+    <button class="btn" id="back" onclick="change(-1)" disabled>← Back</button>
+    <button class="btn primary" id="next" onclick="change(1)">Next page →</button>
+  </div>
+</div>
+<script>
+const pages=[...document.querySelectorAll('.page')], progress=document.getElementById('progress');
+let current=0;
+pages.forEach((_,i)=>{const d=document.createElement('span');d.className='dot'+(i===0?' on':'');progress.appendChild(d)});
+const dots=[...progress.children];
+function show(){pages.forEach((p,i)=>p.classList.toggle('active',i===current));dots.forEach((d,i)=>d.classList.toggle('on',i===current));document.getElementById('pagecount').textContent=String(current+1).padStart(2,'0')+' / '+String(pages.length).padStart(2,'0');document.getElementById('back').disabled=current===0;document.getElementById('next').style.display=current===pages.length-1?'none':'inline-block';}
+function change(n){current=Math.max(0,Math.min(pages.length-1,current+n));show()}
+function restart(){current=0;show()}
+function gift(i){const messages=['A reminder: your smile is a kind of sunshine. ☀️','A wish: may every dream find its way to you. ✨','A promise: never forget how wonderfully you are you. 💗'];document.getElementById('reveal').textContent=messages[i]}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')change(1);if(e.key==='ArrowLeft')change(-1)});
+const holder=document.getElementById('petals');
+for(let i=0;i<20;i++){let p=document.createElement('span');p.className='petal';p.textContent=['✿','✧','❀','♡'][i%4];p.style.left=Math.random()*100+'%';p.style.animationDuration=(9+Math.random()*12)+'s';p.style.animationDelay=(-Math.random()*18)+'s';p.style.fontSize=(12+Math.random()*17)+'px';holder.appendChild(p)}
+show();
+</script>
+</body>
+</html>
